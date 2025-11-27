@@ -29,6 +29,7 @@ public class PlayerController : NetworkBehaviour,IkitchenObjectParent {
     [SerializeField] private float moveSpeed = 5f;
     //[SerializeField] private Inputs gameInput;
     [SerializeField] private LayerMask countersLayerMask;
+    [SerializeField] private LayerMask collisionLayerMask;
     [SerializeField] private Transform kitchenObjectHoldPoint;
     private bool isWalking;
     private Vector3 lastInteractDir;
@@ -141,7 +142,8 @@ public class PlayerController : NetworkBehaviour,IkitchenObjectParent {
         float moveDistance = moveSpeed * Time.deltaTime;
         float playerRadius = 0.7f;
         float playerHieght = 2f;
-        bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHieght, playerRadius, movedir, moveDistance);
+        //adding layer mask to make player not collide
+        bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHieght, playerRadius, movedir, moveDistance,collisionLayerMask);
         //the capsule cast takes the player position from the bootom,the head of player,player size/,were we want to move player,and the distance from the player
 
         //if we cannot move in any direction the player movement to other direction
@@ -152,8 +154,9 @@ public class PlayerController : NetworkBehaviour,IkitchenObjectParent {
 
 
             //attempt only x movement
+            //adding layermask
             Vector3 movedirx = new Vector3(movedir.x, 0, 0).normalized;
-            canMove = (movedir.x < -0.5f || movedir.x > +0.5f) && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHieght, playerRadius, movedirx, moveDistance);
+            canMove = (movedir.x < -0.5f || movedir.x > +0.5f) && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHieght, playerRadius, movedirx, moveDistance,collisionLayerMask);
             //if we are attempting to move in the x direction and there is nothing on there then we can move
             if (canMove)
             {
@@ -165,7 +168,7 @@ public class PlayerController : NetworkBehaviour,IkitchenObjectParent {
                 //we cannot move only on the x
                 //attempt only z movement
                 Vector3 movedirZ = new Vector3(0, 0, movedir.z).normalized;
-                canMove = (movedir.z<-0.5f || movedir.z>+0.5f )&&!Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHieght, playerRadius, movedirZ, moveDistance);
+                canMove = (movedir.z<-0.5f || movedir.z>+0.5f )&&!Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHieght, playerRadius, movedirZ, moveDistance,collisionLayerMask);
                 if (canMove)
                 {
                     //can move only on the z
