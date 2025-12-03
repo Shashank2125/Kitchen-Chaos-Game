@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public event EventHandler OnStateChange;
     public event EventHandler OnGamePause;
     public event EventHandler OnGameUnpause;
+    //Local player ready is changed event
     public event EventHandler OnLocalPlayerReadyChanged;
     private enum State
     {
@@ -44,6 +45,7 @@ public class GameManager : MonoBehaviour
         if (state == State.WaitingToStart)
         {
            isLocalPlayerReady=true;
+           //listening to the event
            OnLocalPlayerReadyChanged?.Invoke(this,EventArgs.Empty);
         }
     }
