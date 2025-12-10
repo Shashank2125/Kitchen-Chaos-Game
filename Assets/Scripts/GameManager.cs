@@ -30,8 +30,8 @@ public class GameManager : NetworkBehaviour
     private bool isLocalPlayerReady;
    
     //3sec to 1sec
-    private float countdownToStartTimer = 3f;
-    private float gamePlayingTimer;
+    private NetworkVariable <float> countdownToStartTimer = new NetworkVariable<float> (3f);
+    private NetworkVariable <float> gamePlayingTimer= new NetworkVariable<float>(0f);
     private float gamePlayingTimerMax = 300f;
     private bool isGamePaused = false;
     //ulong for player id ulong only stores positive numbers size=64 unsigned bits
@@ -76,7 +76,7 @@ public class GameManager : NetworkBehaviour
         bool allClientsReady=true;
         foreach (ulong clientId in NetworkManager.Singleton.ConnectedClientsIds)
         {
-            if (!playerReadyDictonary.ContainsKey(clientId)|| playerReadyDictonary[clientId])
+            if (!playerReadyDictonary.ContainsKey(clientId)|| !playerReadyDictonary[clientId])
             {
                 //This player not ready
                 allClientsReady=false;
@@ -110,17 +110,17 @@ public class GameManager : NetworkBehaviour
                
                 break;
             case State.CountdownToStart:
-                countdownToStartTimer -= Time.deltaTime;
-                if (countdownToStartTimer < 0f)
+                countdownToStartTimer.Value -= Time.deltaTime;
+                if (countdownToStartTimer.Value < 0f)
                 {
                     state.Value = State.GamePlaying;
-                    gamePlayingTimer = gamePlayingTimerMax;
+                    gamePlayingTimer.Value = gamePlayingTimerMax;
                     
                 }
                 break;
             case State.GamePlaying:
-                gamePlayingTimer -= Time.deltaTime;
-                if (gamePlayingTimer < 0f)
+                gamePlayingTimer.Value -= Time.deltaTime;
+                if (gamePlayingTimer.Value < 0f)
                 {
                     state.Value = State.GameOver;
                    
@@ -141,7 +141,7 @@ public class GameManager : NetworkBehaviour
     }
     public float GetCountDownToStartTimer()
     {
-        return countdownToStartTimer;
+        return countdownToStartTimer.Value;
     }
     public bool IsGameOver()
     {
@@ -153,7 +153,7 @@ public class GameManager : NetworkBehaviour
     }
     public float GetGamePlayingTimerNormalized()
     {
-        return 1 - (gamePlayingTimer / gamePlayingTimerMax);
+        return 1 - (gamePlayingTimer.Value / gamePlayingTimerMax);
     }
     public void TogglePauseGame()
     {
