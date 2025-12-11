@@ -64,9 +64,10 @@ public class GameManager : NetworkBehaviour
            isLocalPlayerReady=true;
            //we can pass owner client id but the hacker can fake the client id 
            //and break server for avoiding that we remove it
+           OnLocalPlayerReadyChanged?.Invoke(this,EventArgs.Empty);
            SetPlayerReadyServerRpc();
            //listening to the event
-           OnLocalPlayerReadyChanged?.Invoke(this,EventArgs.Empty);
+           
         }
     }
     [ServerRpc(RequireOwnership =false)]
