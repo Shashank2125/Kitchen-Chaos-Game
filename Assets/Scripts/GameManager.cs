@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class GameManager : NetworkBehaviour
 {
@@ -12,8 +13,8 @@ public class GameManager : NetworkBehaviour
     public static GameManager Instance { get; private set; }
     //state machine for countdown Timer
     public event EventHandler OnStateChange;
-    public event EventHandler OnGamePause;
-    public event EventHandler OnGameUnpause;
+    public event EventHandler OnLocalGamePause;
+    public event EventHandler OnLocalGameUnpause;
     //Local player ready is changed event
     public event EventHandler OnLocalPlayerReadyChanged;
     private enum State
@@ -33,14 +34,17 @@ public class GameManager : NetworkBehaviour
     private NetworkVariable <float> countdownToStartTimer = new NetworkVariable<float> (3f);
     private NetworkVariable <float> gamePlayingTimer= new NetworkVariable<float>(0f);
     private float gamePlayingTimerMax = 300f;
-    private bool isGamePaused = false;
+    private bool isLocalGamePaused = false;
+    private NetworkVariable<bool> isGamePaused=new NetworkVariable<bool>(false);
     //ulong for player id ulong only stores positive numbers size=64 unsigned bits
     private Dictionary<ulong,bool> playerReadyDictonary;
+    private Dictionary<ulong,bool> playerPausedDictonary;
     private void Awake()
     {
         Instance = this;
 
         playerReadyDictonary=new Dictionary<ulong, bool>();
+        playerPausedDictonary=new Dictionary<ulong, bool>();
     }
     private void Start()
     {
@@ -52,6 +56,19 @@ public class GameManager : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         state.OnValueChanged+=State_OnValueChange;
+        isGamePaused.OnValueChanged+=IsGamePaused_OnValueChanged;
+
+    }
+    private void IsGamePaused_OnValueChanged(bool previousValue,bool newValue)
+    {
+        if (isGamePaused.Value)
+        {
+            Time.timeScale=0f;
+        }
+        else
+        {
+            Time.timeScale=1f;
+        }
     }
     private void State_OnValueChange( State previousValue, State newValue)
     {
@@ -158,22 +175,53 @@ public class GameManager : NetworkBehaviour
     }
     public void TogglePauseGame()
     {
-        isGamePaused = !isGamePaused;
-        if (isGamePaused)
+        isLocalGamePaused = !isLocalGamePaused;
+        if (isLocalGamePaused)
         {
+            PauseGameServerRpc();
             //pause the game 
-            Time.timeScale = 0f;
-            OnGamePause?.Invoke(this, EventArgs.Empty);
+            
+            OnLocalGamePause?.Invoke(this, EventArgs.Empty);
             //timescale already has multiplier it pauses all the action
             //of time.deltatime
         }
         else
         {
+            UnpauseGameServerRpc();
 
             //unpause the game 
-            Time.timeScale = 1f;
             
-             OnGameUnpause?.Invoke(this, EventArgs.Empty);
+            
+             OnLocalGameUnpause?.Invoke(this, EventArgs.Empty);
         }
+    }
+    //through these serverrpc server knows which player are paused or
+    //unpaused
+    [ServerRpc(RequireOwnership =false)]
+    private void PauseGameServerRpc(ServerRpcParams serverRpcParams=default)
+    {
+        playerPausedDictonary[serverRpcParams.Receive.SenderClientId]=true;
+        TestGamePausedState();
+    }
+    [ServerRpc(RequireOwnership =false)]
+    private void UnpauseGameServerRpc(ServerRpcParams serverRpcParams=default)
+    {
+        playerPausedDictonary[serverRpcParams.Receive.SenderClientId]=false;
+        TestGamePausedState();
+    }
+    private void TestGamePausedState()
+    {
+        foreach(ulong clientId in NetworkManager.Singleton.ConnectedClientsIds)
+        {
+            if (playerPausedDictonary.ContainsKey(clientId)&& playerPausedDictonary[clientId])
+            {
+                //THis player is paused
+                isGamePaused.Value=true;
+                return;
+            }
+        }
+        isGamePaused.Value=false;
+        //if we reach here then all player are unpaused
+
     }
 }

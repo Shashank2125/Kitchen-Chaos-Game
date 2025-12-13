@@ -31,18 +31,18 @@ public class GamePauseUI : MonoBehaviour
     }
     private void Start()
     {
-        GameManager.Instance.OnGamePause += GameManager_OnGamePause;
-        GameManager.Instance.OnGameUnpause += GameManager_OnGameUnpause;
+        GameManager.Instance.OnLocalGamePause += GameManager_OnLocalGamePause;
+        GameManager.Instance.OnLocalGameUnpause += GameManager_OnLocalGameUnpause;
 
         Hide();
     }
-    private void GameManager_OnGamePause(object sender, System.EventArgs e)
+    private void GameManager_OnLocalGamePause(object sender, System.EventArgs e)
     {
         //show pause window
         Show();
 
     }
-    private void GameManager_OnGameUnpause(object sender, System.EventArgs e)
+    private void GameManager_OnLocalGameUnpause(object sender, System.EventArgs e)
     {
         //hide the pause window
         Hide();

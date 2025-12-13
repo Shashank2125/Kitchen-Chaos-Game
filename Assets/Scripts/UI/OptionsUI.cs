@@ -120,7 +120,7 @@ public class OptionsUI : MonoBehaviour
     }
     private void UpdateVisual()
     {
-        GameManager.Instance.OnGameUnpause += GameManager_OnGamePaused;
+        GameManager.Instance.OnLocalGameUnpause += GameManager_OnGamePaused;
         //update the visual on optionsUI
         soundEffectsText.text = "Sound Effects: " + Mathf.Round(SoundManager.Instance.GetVolume() * 10f);
         musicText.text = "Music: " + Mathf.Round(MusicManager.Instance.GetVolume() * 10f);
