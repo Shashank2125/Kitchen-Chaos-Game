@@ -16,6 +16,8 @@ public class GameManager : NetworkBehaviour
     public event EventHandler OnLocalGamePause;
     public event EventHandler OnLocalGameUnpause;
     //Local player ready is changed event
+    public event EventHandler OnMultiplayerGamePaused;
+    public event EventHandler OnMultiplayerGameUnpaused;
     public event EventHandler OnLocalPlayerReadyChanged;
     private enum State
     {
@@ -64,10 +66,12 @@ public class GameManager : NetworkBehaviour
         if (isGamePaused.Value)
         {
             Time.timeScale=0f;
+            OnMultiplayerGamePaused?.Invoke(this,EventArgs.Empty);
         }
         else
         {
             Time.timeScale=1f;
+            OnMultiplayerGameUnpaused?.Invoke(this,EventArgs.Empty);
         }
     }
     private void State_OnValueChange( State previousValue, State newValue)
