@@ -14,40 +14,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentVersion: 1.01
   subtype: kitchenchaos
-  lastShownTimestamp: 1765820142
+  lastShownTimestamp: 1766116356
   lastUpdateResponse:
     version: 1.01
     versionUrl: https://unitycodemonkey.com
-  checkedLastUpdateTimestamp: 1765820142
+  checkedLastUpdateTimestamp: 1766116357
   lastQOTDResponse:
-    questionId: 252
-    questionText: What is the significance of January 1st, 1970?
-    answerA: Skyrim Release Date on the Magnavox Odyssey
-    answerB: Start of Unix Time
-    answerC: 
+    questionId: 253
+    questionText: Which of these are affected when you modify Time.timeScale?
+    answerA: Time.deltaTime, Time.realtimeSinceStartup, Time.unscaledDeltaTime, Time.timeSinceLevelLoad,
+      Time.fixedTime
+    answerB: Time.deltaTime, Time.realtimeSinceStartup, Time.timeSinceLevelLoad,
+      Time.fixedTime
+    answerC: Time.deltaTime, Time.timeSinceLevelLoad, Time.fixedTime
     answerD: 
     answerE: 
-  lastQotdTimestamp: 1765820142
+  lastQotdTimestamp: 1766116357
   lastDynamicHeaderResponse:
-    topImageUrl: https://codemonkeyexternal.blob.core.windows.net/external/Misc/unityCodeMonkeyBundleDec2025.png
-    topText: I made a Bundle alongside the Asset Store! Awesome deal on new-never-discounted
-      tools!
-    topLink: cmbundleassetstore
+    topImageUrl: https://codemonkeyexternal.blob.core.windows.net/external/Misc/problemSolvingCourse_BonusesEndingMonth.png
+    topText: The Special Bonuses on my Problem Solving course are ending this month!
+    topLink: problemsolvingcourse
     bottomText: My 10+ Years of C# Knowledge in 1 Course!
     bottomLink: csharpcourse
-  lastDynamicHeaderTimestamp: 1765820142
+  lastDynamicHeaderTimestamp: 1766116357
   websiteLatestMessage:
     text: <a href="https://cmonkey.co/freecourses">Check out all my FREE courses!
       Click here!</a>
-  websiteLatestMessageTimestamp: 1765820142
+  websiteLatestMessageTimestamp: 1766116357
   websiteLatestVideos:
     videos:
+    - youTubeId: 4n0flLF7FB0
+      title: THIS is the #1 Game Marketing RULE!
     - youTubeId: CGQovJjijwE
       title: FREE DOWNLOAD 56 Project Files!
     - youTubeId: OwxThbyAmOw
       title: TOP 10 FREE NEW Assets DECEMBER 2025!
     - youTubeId: EB0WQA6qjbI
       title: Unity 6.3 LTS is RELEASED! (This is the one you should use!)
-    - youTubeId: Lg0ARMsa2ZU
-      title: Thanks to YOU I won TWO awards!
-  websiteLatestVideosTimestamp: 1765820142
+  websiteLatestVideosTimestamp: 1766116357

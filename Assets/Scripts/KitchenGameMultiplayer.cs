@@ -11,6 +11,31 @@ public class KitchenGameMultiplayer : NetworkBehaviour
     {
         Instance = this;
     }
+    public void StartHost()
+    {
+        NetworkManager.Singleton.StartHost();
+    }
+    public void StartClient()
+    {
+        NetworkManager.Singleton.ConnectionApprovalCallback+=NetworkManager_ConnectionApprovalCallback;
+        NetworkManager.Singleton.StartClient();
+    }
+    private void NetworkManager_ConnectionApprovalCallback(NetworkManager.ConnectionApprovalRequest connectionApprovalRequest,NetworkManager.ConnectionApprovalResponse connectionApprovalResponse)
+    {
+        //if we enable connection approval so that no one can join
+        //mid game we have manually enable player creation and if the
+        //game is not in waiting to start condition no other player can 
+        //can join
+        if (GameManager.Instance.IsWaitingToStart()){
+        connectionApprovalResponse.Approved=true;
+        connectionApprovalResponse.CreatePlayerObject=true;
+        }
+        else
+        {
+            connectionApprovalResponse.Approved=false;
+        }
+    }
+
     public void SpawnKitchenObject(KitchenObjectSO kitchenObjectSO, IkitchenObjectParent kitchenObjectParent)
     {
         SpawnKitchenObjectServerRpc(GetKitchenObjectSOIndex(kitchenObjectSO), kitchenObjectParent.GetNetworkObject());
