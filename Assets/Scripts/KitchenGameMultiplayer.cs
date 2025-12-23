@@ -13,14 +13,10 @@ public class KitchenGameMultiplayer : NetworkBehaviour
     }
     public void StartHost()
     {
+         NetworkManager.Singleton.ConnectionApprovalCallback+=NetworkManager_ConnectionApprovalCallback;
         NetworkManager.Singleton.StartHost();
     }
-    public void StartClient()
-    {
-        NetworkManager.Singleton.ConnectionApprovalCallback+=NetworkManager_ConnectionApprovalCallback;
-        NetworkManager.Singleton.StartClient();
-    }
-    private void NetworkManager_ConnectionApprovalCallback(NetworkManager.ConnectionApprovalRequest connectionApprovalRequest,NetworkManager.ConnectionApprovalResponse connectionApprovalResponse)
+     private void NetworkManager_ConnectionApprovalCallback(NetworkManager.ConnectionApprovalRequest connectionApprovalRequest,NetworkManager.ConnectionApprovalResponse connectionApprovalResponse)
     {
         //if we enable connection approval so that no one can join
         //mid game we have manually enable player creation and if the
@@ -35,6 +31,12 @@ public class KitchenGameMultiplayer : NetworkBehaviour
             connectionApprovalResponse.Approved=false;
         }
     }
+    public void StartClient()
+    {
+       
+        NetworkManager.Singleton.StartClient();
+    }
+   
 
     public void SpawnKitchenObject(KitchenObjectSO kitchenObjectSO, IkitchenObjectParent kitchenObjectParent)
     {

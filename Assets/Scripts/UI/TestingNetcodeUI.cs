@@ -1,7 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using Unity.Netcode;
-using System.Runtime.CompilerServices;
 
 public class TestingNetcodeUI : MonoBehaviour
 {
