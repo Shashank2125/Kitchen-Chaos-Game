@@ -14,45 +14,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentVersion: 1.01
   subtype: kitchenchaos
-  lastShownTimestamp: 1766501639
+  lastShownTimestamp: 1766679132
   lastUpdateResponse:
     version: 1.01
     versionUrl: https://unitycodemonkey.com
-  checkedLastUpdateTimestamp: 1766501639
+  checkedLastUpdateTimestamp: 1766679132
   lastQOTDResponse:
-    questionId: 254
-    questionText: 'Is there a problem with this code?
-
-      <p>private void SetCameraFollowFunc(Func&lt;Vector3&gt;
-      cameraFollowFunc) { }</p>
-
-      <p>SetCameraFollowFunc(() =&gt; new Vector3(1,
-      0, 0));</p>'
-    answerA: No
-    answerB: 'Should be: SetCameraFollowFunc(() =&#62; return new Vector3(1, 0, 0));'
-    answerC: 'Should be: SetCameraFollowFunc((Vector3(1, 0, 0)) =&#62; { });'
-    answerD: 
+    questionId: 255
+    questionText: How should you store the health of each unit in your game?
+    answerA: public int health;
+    answerB: private int health;
+    answerC: public static int health;
+    answerD: private int h;
     answerE: 
-  lastQotdTimestamp: 1766501639
+  lastQotdTimestamp: 1766679132
   lastDynamicHeaderResponse:
     topImageUrl: https://codemonkeyexternal.blob.core.windows.net/external/Misc/problemSolvingCourse_BonusesEndingMonth.png
     topText: The Special Bonuses on my Problem Solving course are ending this month!
     topLink: problemsolvingcourse
     bottomText: My 10+ Years of C# Knowledge in 1 Course!
     bottomLink: csharpcourse
-  lastDynamicHeaderTimestamp: 1766501639
+  lastDynamicHeaderTimestamp: 1766679132
   websiteLatestMessage:
     text: <a href="https://cmonkey.co/freecourses">Check out all my FREE courses!
       Click here!</a>
-  websiteLatestMessageTimestamp: 1766501639
+  websiteLatestMessageTimestamp: 1766679132
   websiteLatestVideos:
     videos:
+    - youTubeId: Q7NFzES5GMU
+      title: How to Convert Input Manager to Input System (Unity 6.3 LTS)
     - youTubeId: zk3vMm0dJ_M
       title: Useless IMPORTANT Game Features (for some players)
     - youTubeId: f_zWWVFKwho
       title: TOP 10 NEW Systems and Tools DECEMBER 2025! | Unity Asset Store
     - youTubeId: 4n0flLF7FB0
       title: THIS is the #1 Game Marketing RULE!
-    - youTubeId: CGQovJjijwE
-      title: FREE DOWNLOAD 56 Project Files!
-  websiteLatestVideosTimestamp: 1766501639
+  websiteLatestVideosTimestamp: 1766679132
