@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentVersion: 1.01
   subtype: kitchenchaos
-  lastShownTimestamp: 1766679132
+  lastShownTimestamp: 1766846251
   lastUpdateResponse:
     version: 1.01
     versionUrl: https://unitycodemonkey.com
-  checkedLastUpdateTimestamp: 1766679132
+  checkedLastUpdateTimestamp: 1766846251
   lastQOTDResponse:
     questionId: 255
     questionText: How should you store the health of each unit in your game?
@@ -27,26 +27,26 @@ MonoBehaviour:
     answerC: public static int health;
     answerD: private int h;
     answerE: 
-  lastQotdTimestamp: 1766679132
+  lastQotdTimestamp: 1766846251
   lastDynamicHeaderResponse:
     topImageUrl: https://codemonkeyexternal.blob.core.windows.net/external/Misc/problemSolvingCourse_BonusesEndingMonth.png
     topText: The Special Bonuses on my Problem Solving course are ending this month!
     topLink: problemsolvingcourse
     bottomText: My 10+ Years of C# Knowledge in 1 Course!
     bottomLink: csharpcourse
-  lastDynamicHeaderTimestamp: 1766679132
+  lastDynamicHeaderTimestamp: 1766846251
   websiteLatestMessage:
     text: <a href="https://cmonkey.co/freecourses">Check out all my FREE courses!
       Click here!</a>
-  websiteLatestMessageTimestamp: 1766679132
+  websiteLatestMessageTimestamp: 1766846251
   websiteLatestVideos:
     videos:
+    - youTubeId: rtwwNG7Jwwc
+      title: Get Ready for 2026 with FREE Technical Unity ebooks and samples!
     - youTubeId: Q7NFzES5GMU
       title: How to Convert Input Manager to Input System (Unity 6.3 LTS)
     - youTubeId: zk3vMm0dJ_M
       title: Useless IMPORTANT Game Features (for some players)
     - youTubeId: f_zWWVFKwho
       title: TOP 10 NEW Systems and Tools DECEMBER 2025! | Unity Asset Store
-    - youTubeId: 4n0flLF7FB0
-      title: THIS is the #1 Game Marketing RULE!
-  websiteLatestVideosTimestamp: 1766679132
+  websiteLatestVideosTimestamp: 1766846251

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,6 +15,8 @@ public static class Loader
         MainMenuScene,
         LoadingScene,
         GameScene,
+        LobbyScene,
+        CharacterSelectScene,
 
     }
     private static Scene targetScene;
@@ -28,6 +31,10 @@ public static class Loader
     }
     //we load the scene after the first update loader call back till
     //then the scene which is to be loaded is loading scene 
+    public static void LoadNetwork(Scene targetScene)
+    {
+        NetworkManager.Singleton.SceneManager.LoadScene(targetScene.ToString(),LoadSceneMode.Single);
+    }
     public static void LoaderCallback()
     {
         //loading the target scene after loading scene

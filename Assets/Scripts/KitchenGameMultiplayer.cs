@@ -10,6 +10,8 @@ public class KitchenGameMultiplayer : NetworkBehaviour
     private void Awake()
     {
         Instance = this;
+        //this object 
+        DontDestroyOnLoad(gameObject);
     }
     public void StartHost()
     {
@@ -18,18 +20,19 @@ public class KitchenGameMultiplayer : NetworkBehaviour
     }
      private void NetworkManager_ConnectionApprovalCallback(NetworkManager.ConnectionApprovalRequest connectionApprovalRequest,NetworkManager.ConnectionApprovalResponse connectionApprovalResponse)
     {
+        connectionApprovalResponse.Approved=true;
         //if we enable connection approval so that no one can join
         //mid game we have manually enable player creation and if the
         //game is not in waiting to start condition no other player can 
         //can join
-        if (GameManager.Instance.IsWaitingToStart()){
-        connectionApprovalResponse.Approved=true;
-        connectionApprovalResponse.CreatePlayerObject=true;
-        }
-        else
-        {
-            connectionApprovalResponse.Approved=false;
-        }
+        //if (GameManager.Instance.IsWaitingToStart()){
+        
+        //connectionApprovalResponse.CreatePlayerObject=true;
+        //}
+        //else
+        //{
+          //  connectionApprovalResponse.Approved=false;
+       // }
     }
     public void StartClient()
     {
