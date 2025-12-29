@@ -14,39 +14,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentVersion: 1.01
   subtype: kitchenchaos
-  lastShownTimestamp: 1766846251
+  lastShownTimestamp: 1767002505
   lastUpdateResponse:
     version: 1.01
     versionUrl: https://unitycodemonkey.com
-  checkedLastUpdateTimestamp: 1766846251
+  checkedLastUpdateTimestamp: 1767002505
   lastQOTDResponse:
-    questionId: 255
-    questionText: How should you store the health of each unit in your game?
-    answerA: public int health;
-    answerB: private int health;
-    answerC: public static int health;
-    answerD: private int h;
+    questionId: 256
+    questionText: The Profiler is useful for...
+    answerA: Balancing difficulty
+    answerB: Level Design
+    answerC: Indentifying performance bottlenecks
+    answerD: 
     answerE: 
-  lastQotdTimestamp: 1766846251
+  lastQotdTimestamp: 1767002505
   lastDynamicHeaderResponse:
     topImageUrl: https://codemonkeyexternal.blob.core.windows.net/external/Misc/problemSolvingCourse_BonusesEndingMonth.png
     topText: The Special Bonuses on my Problem Solving course are ending this month!
     topLink: problemsolvingcourse
     bottomText: My 10+ Years of C# Knowledge in 1 Course!
     bottomLink: csharpcourse
-  lastDynamicHeaderTimestamp: 1766846251
+  lastDynamicHeaderTimestamp: 1767002505
   websiteLatestMessage:
     text: <a href="https://cmonkey.co/freecourses">Check out all my FREE courses!
       Click here!</a>
-  websiteLatestMessageTimestamp: 1766846251
+  websiteLatestMessageTimestamp: 1767002505
   websiteLatestVideos:
     videos:
+    - youTubeId: ZrlwMA2qaKw
+      title: BEST NEW Visual Assets to INSPIRE YOU! (DECEMBER 2025)
     - youTubeId: rtwwNG7Jwwc
       title: Get Ready for 2026 with FREE Technical Unity ebooks and samples!
     - youTubeId: Q7NFzES5GMU
       title: How to Convert Input Manager to Input System (Unity 6.3 LTS)
     - youTubeId: zk3vMm0dJ_M
       title: Useless IMPORTANT Game Features (for some players)
-    - youTubeId: f_zWWVFKwho
-      title: TOP 10 NEW Systems and Tools DECEMBER 2025! | Unity Asset Store
-  websiteLatestVideosTimestamp: 1766846251
+  websiteLatestVideosTimestamp: 1767002505

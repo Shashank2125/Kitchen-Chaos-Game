@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class GameManager : NetworkBehaviour
 {
@@ -27,10 +28,12 @@ public class GameManager : NetworkBehaviour
         GamePlaying,
         GameOver,
     }
+    [SerializeField] private Transform playerPrefab;
 
     private NetworkVariable<State> state=new NetworkVariable<State>(State.WaitingToStart);
     //for checking if the player is ready to play or not
     private bool isLocalPlayerReady;
+    private bool autoTestGamePausedState;
    
     //3sec to 1sec
     private NetworkVariable <float> countdownToStartTimer = new NetworkVariable<float> (3f);
@@ -39,14 +42,14 @@ public class GameManager : NetworkBehaviour
     private bool isLocalGamePaused = false;
     private NetworkVariable<bool> isGamePaused=new NetworkVariable<bool>(false);
     //ulong for player id ulong only stores positive numbers size=64 unsigned bits
-    private Dictionary<ulong,bool> playerReadyDictonary;
-    private Dictionary<ulong,bool> playerPausedDictonary;
+    private Dictionary<ulong,bool> playerReadyDictionary;
+    private Dictionary<ulong,bool> playerPausedDictionary;
     private void Awake()
     {
         Instance = this;
 
-        playerReadyDictonary=new Dictionary<ulong, bool>();
-        playerPausedDictonary=new Dictionary<ulong, bool>();
+        playerReadyDictionary=new Dictionary<ulong, bool>();
+        playerPausedDictionary=new Dictionary<ulong, bool>();
     }
     private void Start()
     {
@@ -59,7 +62,26 @@ public class GameManager : NetworkBehaviour
     {
         state.OnValueChanged+=State_OnValueChange;
         isGamePaused.OnValueChanged+=IsGamePaused_OnValueChanged;
+        if (IsServer)
+        {
+            NetworkManager.Singleton.OnClientDisconnectCallback+=NetworkManager_OnClientDisconnectCallBack;
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted+=SceneManager_OnLoadEventCompleted;
+        }
 
+    }
+    //spawning player prefab on the game 
+    private void SceneManager_OnLoadEventCompleted(string sceneName,UnityEngine.SceneManagement.LoadSceneMode loadSceneMode,List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
+    {
+        foreach(ulong clientId in NetworkManager.Singleton.ConnectedClientsIds)
+        {
+            Transform playerTransform= Instantiate(playerPrefab);
+            //player get spawned and destroyed with scene
+            playerTransform.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId,true);
+        }
+    }
+    private void NetworkManager_OnClientDisconnectCallBack(ulong clientId)
+    {
+        autoTestGamePausedState=true;
     }
     private void IsGamePaused_OnValueChanged(bool previousValue,bool newValue)
     {
@@ -94,11 +116,11 @@ public class GameManager : NetworkBehaviour
     [ServerRpc(RequireOwnership =false)]
     private void SetPlayerReadyServerRpc(ServerRpcParams serverRpcParams=default)
     {
-        playerReadyDictonary[serverRpcParams.Receive.SenderClientId]=true;
+        playerReadyDictionary[serverRpcParams.Receive.SenderClientId]=true;
         bool allClientsReady=true;
         foreach (ulong clientId in NetworkManager.Singleton.ConnectedClientsIds)
         {
-            if (!playerReadyDictonary.ContainsKey(clientId)|| !playerReadyDictonary[clientId])
+            if (!playerReadyDictionary.ContainsKey(clientId)|| !playerReadyDictionary[clientId])
             {
                 //This player not ready
                 allClientsReady=false;
@@ -111,7 +133,6 @@ public class GameManager : NetworkBehaviour
         }
         Debug.Log("allclientReady" + allClientsReady);
     }
-   
     private void Inputs_OnPauseAction(object sender,EventArgs e)
     {
         TogglePauseGame();
@@ -208,20 +229,20 @@ public class GameManager : NetworkBehaviour
     [ServerRpc(RequireOwnership =false)]
     private void PauseGameServerRpc(ServerRpcParams serverRpcParams=default)
     {
-        playerPausedDictonary[serverRpcParams.Receive.SenderClientId]=true;
+        playerPausedDictionary[serverRpcParams.Receive.SenderClientId]=true;
         TestGamePausedState();
     }
     [ServerRpc(RequireOwnership =false)]
     private void UnpauseGameServerRpc(ServerRpcParams serverRpcParams=default)
     {
-        playerPausedDictonary[serverRpcParams.Receive.SenderClientId]=false;
+        playerPausedDictionary[serverRpcParams.Receive.SenderClientId]=false;
         TestGamePausedState();
     }
     private void TestGamePausedState()
     {
         foreach(ulong clientId in NetworkManager.Singleton.ConnectedClientsIds)
         {
-            if (playerPausedDictonary.ContainsKey(clientId)&& playerPausedDictonary[clientId])
+            if (playerPausedDictionary.ContainsKey(clientId)&& playerPausedDictionary[clientId])
             {
                 //THis player is paused
                 isGamePaused.Value=true;
