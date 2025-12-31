@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Search;
 using UnityEngine;
-using UnityEngine.Video;
 
 public class ConnectingUI : MonoBehaviour
 {
@@ -28,5 +24,11 @@ public class ConnectingUI : MonoBehaviour
     private void Hide()
     {
         gameObject.SetActive(false);
+    }
+    private void OnDestroy()
+    {
+        //unsub when scene changes abd UI get destroyed
+        KitchenGameMultiplayer.Instance.OnTryingToJoinGame-=KitchenGameMultiplayer_OnTryingToJoinGame;
+        KitchenGameMultiplayer.Instance.OnFailedToJoinGame-=KitchenGameMultiplayer_OnFailedToJoinGame;
     }
 }
